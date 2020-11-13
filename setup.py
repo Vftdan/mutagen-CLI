@@ -7,11 +7,11 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, "requirements.txt"), "r") as f:
     install_requires = f.read().splitlines()
 
-classifiers=[
+classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
     # ? "Intended Audience :: End Users/Desktop",
-    #"License :: OSI Approved :: ??)",
+    # "License :: OSI Approved :: ??)",
     "Programming Language :: Python",
     "Topic :: Multimedia :: Sound/Audio",
     ]
