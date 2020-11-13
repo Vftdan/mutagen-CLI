@@ -1,7 +1,5 @@
-#! /usr/bin/env python2
-# -*- coding: utf-8 -*-
+#! /usr/bin/env python3
 
-from __future__ import print_function
 from mutagen import File
 from mutagen.mp4 import MP4
 from mutagen.mp3 import MP3, HeaderNotFoundError
@@ -47,12 +45,12 @@ def main():
     args = parser.parse_args()
 
     # input section
-    to_artist = unicode(args.artist.decode('utf-8'))
-    to_album = unicode(args.album.decode('utf-8'))
-    to_title = unicode(args.title.decode('utf-8'))
-    to_wors = unicode(args.wors.decode('utf-8'))
-    to_year = unicode(args.year.decode('utf-8'))
-    to_cover = unicode(args.cover.decode('utf-8'))
+    to_artist = args.artist
+    to_album = args.album
+    to_title = args.title
+    to_wors = args.wors
+    to_year = args.year
+    to_cover = args.cover
     if to_cover != '':
         cover_ext = os.path.splitext(to_cover)[1]
         # print("Cover path is "+to_cover)
@@ -63,10 +61,10 @@ def main():
 
     # output section
     outputs = []
-    formatstr = unicode(args.format)
+    formatstr = args.format
     escapepat = ""
     delimiter = ''
-    for c in unicode(args.escape):
+    for c in args.escape:
         esc = ''
         if c in r'()[]\^$.|?*+{}':
             esc = '\\'
@@ -76,7 +74,7 @@ def main():
     if escapepat != '':
         to_escape = True
         escapepat = '(%s)' % escapepat
-    separator = unicode(args.separator)
+    separator = args.separator
 
     def getinfo(file):
         try:
@@ -85,7 +83,7 @@ def main():
             return (0, 0)
 
     for f in args.audiofile:
-        path = unicode(os.path.realpath(f.decode('utf-8')))
+        path = os.path.realpath(f)
         artist = title = album = year = wors = ""
         file = File(f)
         kbps, len = getinfo(file)
@@ -151,15 +149,14 @@ def main():
         except:
             pass
 
-
-        reps = {u'artist': artist,
-                u'title': title,
-                u'album': album,
-                u'year': year,
-                u"kbps": kbps,
-                u'wors': wors,
-                u'len': len,
-                u'path': path}
+        reps = {'artist': artist,
+                'title': title,
+                'album': album,
+                'year': year,
+                "kbps": kbps,
+                'wors': wors,
+                'len': len,
+                'path': path}
         if to_escape:
             for k in reps:
                 reps[k] = re.sub(escapepat, r'\\\1', u"%s" % reps[k])
@@ -167,8 +164,8 @@ def main():
         if formatstr != '':
             outputs.append(formatstr.format(**reps))
 
-    output = separator.join(outputs).encode('utf-8')
-    print(output, end=u'')
+    output = separator.join(outputs)
+    print(output, end='')
 
 
 if __name__ == '__main__':
