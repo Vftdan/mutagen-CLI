@@ -2,19 +2,22 @@
 
 from mutagen import File
 from mutagen.mp4 import MP4
-from mutagen.mp3 import MP3, HeaderNotFoundError
-from mutagen.id3 import ID3, TPE1, TALB, TIT2, WORS, TDRL, APIC
+from mutagen.mp3 import MP3
+from mutagen.id3 import TPE1, TALB, TIT2, WORS, TDRL, APIC
 import argparse
 import re
 import os
 
+
 def main():
-    parser = argparse.ArgumentParser('Change or manipulate the ID3 tags of the audio files')
+    parser = argparse.ArgumentParser(
+        'Change or manipulate the ID3 tags of the audio files')
     parser.add_argument('--artist', '-a', default=None,
                         help='set the artist name')
     parser.add_argument('--album', '-A', default=None,
                         help='set the album name')
-    parser.add_argument('--title', '-t', default=None, help='set the title name')
+    parser.add_argument('--title', '-t', default=None,
+                        help='set the title name')
     parser.add_argument('--wors', '-r', default=None,
                         help='set the internet radio url')
     parser.add_argument('--year', '-Y', default=None,
@@ -22,16 +25,18 @@ def main():
     parser.add_argument('--cover', '-c', default=None,
                         help='set the cover image')
     parser.add_argument('--format', '-f', default=None,
-                        help='''return the ID3 information as a formatted string;
-                                                        the format string should containing one or more of the following specifiers:
-                                                        , {artist}
-                                                        , {title}
-                                                        , {album}
-                                                        , {year}
-                                                        , {kbps}
-                                                        , {wors}
-                                                        , {len} (the length of the audio file, in seconds)
-                                                        , {path} (the absolute path of the file)''')
+                        help='return the ID3 information as a formatted'
+                        '''string;
+                           the format string should containing one or more'''
+                        ''' of the following specifiers:
+                           , {artist}
+                           , {title}
+                           , {album}
+                           , {year}
+                           , {kbps}
+                           , {wors}
+                           , {len} (the length of the audio file, in seconds)
+                           , {path} (the absolute path of the file)''')
     parser.add_argument('--separator', '-s', default='\n',
                         help='define the separator used to append at the end'
                         ' of the output for each file (excluding the last'
@@ -108,10 +113,10 @@ def main():
                 if to_cover is not None:
                     # print('The image data is '+open(to_cover).read())
                     file_['APIC:'] = APIC(
-                            encoding=3,
-                            mime=to_cover_mime,
-                            type=3,
-                            data=open(to_cover).read()
+                        encoding=3,
+                        mime=to_cover_mime,
+                        type=3,
+                        data=open(to_cover).read()
                     )
                 file_.save()
 
