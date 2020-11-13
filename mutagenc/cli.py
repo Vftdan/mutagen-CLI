@@ -76,75 +76,75 @@ def main():
         escapepat = '(%s)' % escapepat
     separator = args.separator
 
-    def getinfo(file):
+    def getinfo(file_):
         try:
-            return (file.info.bitrate / 1000, int(round(file.info.length)))
+            return (file_.info.bitrate / 1000, int(round(file_.info.length)))
         except:
             return (0, 0)
 
     for f in args.audiofile:
         path = os.path.realpath(f)
         artist = title = album = year = wors = ""
-        file = File(f)
-        kbps, len = getinfo(file)
+        file_ = File(f)
+        kbps, len_ = getinfo(file_)
         try:
-            if (type(file) == MP3):
+            if (type(file_) == MP3):
                 # add ID3 tag if it doesn't exist
                 try:
-                    file.add_tags()
+                    file_.add_tags()
                 except:
                     pass
                 # should we set the tag in anyway?
                 if to_artist is not None:
-                    file['TPE1'] = TPE1(encoding=3, text=to_artist)
+                    file_['TPE1'] = TPE1(encoding=3, text=to_artist)
                 if to_album is not None:
-                    file['TALB'] = TALB(encoding=3, text=to_album)
+                    file_['TALB'] = TALB(encoding=3, text=to_album)
                 if to_title is not None:
-                    file['TIT2'] = TIT2(encoding=3, text=to_title)
+                    file_['TIT2'] = TIT2(encoding=3, text=to_title)
                 if to_wors is not None:
-                    file['WORS'] = WORS(url=to_wors)
+                    file_['WORS'] = WORS(url=to_wors)
                 if to_year is not None:
-                    file['TDRL'] = TDRL(encoding=3, text=to_year)
+                    file_['TDRL'] = TDRL(encoding=3, text=to_year)
                 if to_cover is not None:
                     # print('The image data is '+open(to_cover).read())
-                    file['APIC:'] = APIC(
+                    file_['APIC:'] = APIC(
                             encoding=3,
                             mime=to_cover_mime,
                             type=3,
                             data=open(to_cover).read()
                     )
-                file.save()
+                file_.save()
 
                 # process mp3 specific tag information
-                artist = file['TPE1'].text[0] if 'TPE1' in file \
+                artist = file_['TPE1'].text[0] if 'TPE1' in file_ \
                     else ''
-                album = file['TALB'].text[0] if 'TALB' in file \
+                album = file_['TALB'].text[0] if 'TALB' in file_ \
                     else ''
-                title = file['TIT2'].text[0] if 'TIT2' in file \
+                title = file_['TIT2'].text[0] if 'TIT2' in file_ \
                     else ''
-                wors = file['WORS'].url if 'WORS' in file else ''
-                year = file['TDRL'].text[0] if 'TDRL' in file else ''
-            elif (type(file) == MP4):
+                wors = file_['WORS'].url if 'WORS' in file_ else ''
+                year = file_['TDRL'].text[0] if 'TDRL' in file_ else ''
+            elif (type(file_) == MP4):
                 # should we set the tag in anyway?
                 if to_artist is not None:
-                    file['\xa9ART'] = [to_artist]
+                    file_['\xa9ART'] = [to_artist]
                 if to_album is not None:
-                    file['\xa9alb'] = [to_album]
+                    file_['\xa9alb'] = [to_album]
                 if to_title is not None:
-                    file['\xa9nam'] = [to_title]
+                    file_['\xa9nam'] = [to_title]
                 if to_year is not None:
-                    file['\xa9day'] = [to_year]
+                    file_['\xa9day'] = [to_year]
                 if to_cover is not None:
-                    file['covr'] = [open(to_cover).read()]
-                file.save()
+                    file_['covr'] = [open(to_cover).read()]
+                file_.save()
 
-                artist = file['\xa9ART'][0] if '\xa9ART' in file \
+                artist = file_['\xa9ART'][0] if '\xa9ART' in file_ \
                     else ''
-                album = file['\xa9alb'][0] if '\xa9alb' in file \
+                album = file_['\xa9alb'][0] if '\xa9alb' in file_ \
                     else ''
-                title = file['\xa9nam'][0] if '\xa9nam' in file \
+                title = file_['\xa9nam'][0] if '\xa9nam' in file_ \
                     else ''
-                year = file['\xa9day'][0] if '\xa9day' in file \
+                year = file_['\xa9day'][0] if '\xa9day' in file_ \
                     else ''
         except:
             pass
@@ -155,7 +155,7 @@ def main():
                 'year': year,
                 "kbps": kbps,
                 'wors': wors,
-                'len': len,
+                'len': len_,
                 'path': path}
         if to_escape:
             for k in reps:
