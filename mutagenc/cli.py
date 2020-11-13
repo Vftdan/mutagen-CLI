@@ -96,18 +96,18 @@ def main():
                     pass
                 # should we set the tag in anyway?
                 if to_artist is not None:
-                    file.tags['TPE1'] = TPE1(encoding=3, text=to_artist)
+                    file['TPE1'] = TPE1(encoding=3, text=to_artist)
                 if to_album is not None:
-                    file.tags['TALB'] = TALB(encoding=3, text=to_album)
+                    file['TALB'] = TALB(encoding=3, text=to_album)
                 if to_title is not None:
-                    file.tags['TIT2'] = TIT2(encoding=3, text=to_title)
+                    file['TIT2'] = TIT2(encoding=3, text=to_title)
                 if to_wors is not None:
-                    file.tags['WORS'] = WORS(url=to_wors)
+                    file['WORS'] = WORS(url=to_wors)
                 if to_year is not None:
-                    file.tags['TDRL'] = TDRL(encoding=3, text=to_year)
+                    file['TDRL'] = TDRL(encoding=3, text=to_year)
                 if to_cover is not None:
                     # print('The image data is '+open(to_cover).read())
-                    file.tags['APIC:'] = APIC(
+                    file['APIC:'] = APIC(
                             encoding=3,
                             mime=to_cover_mime,
                             type=3,
@@ -116,35 +116,35 @@ def main():
                 file.save()
 
                 # process mp3 specific tag information
-                artist = file.tags['TPE1'].text[0] if 'TPE1' in file.tags \
+                artist = file['TPE1'].text[0] if 'TPE1' in file \
                     else ''
-                album = file.tags['TALB'].text[0] if 'TALB' in file.tags \
+                album = file['TALB'].text[0] if 'TALB' in file \
                     else ''
-                title = file.tags['TIT2'].text[0] if 'TIT2' in file.tags \
+                title = file['TIT2'].text[0] if 'TIT2' in file \
                     else ''
-                wors = file.tags['WORS'].url if 'WORS' in file.tags else ''
-                year = file.tags['TDRL'].text[0] if 'TDRL' in file.tags else ''
+                wors = file['WORS'].url if 'WORS' in file else ''
+                year = file['TDRL'].text[0] if 'TDRL' in file else ''
             elif (type(file) == MP4):
                 # should we set the tag in anyway?
                 if to_artist is not None:
-                    file.tags['\xa9ART'] = [to_artist]
+                    file['\xa9ART'] = [to_artist]
                 if to_album is not None:
-                    file.tags['\xa9alb'] = [to_album]
+                    file['\xa9alb'] = [to_album]
                 if to_title is not None:
-                    file.tags['\xa9nam'] = [to_title]
+                    file['\xa9nam'] = [to_title]
                 if to_year is not None:
-                    file.tags['\xa9day'] = [to_year]
+                    file['\xa9day'] = [to_year]
                 if to_cover is not None:
-                    file.tags['covr'] = [open(to_cover).read()]
+                    file['covr'] = [open(to_cover).read()]
                 file.save()
 
-                artist = file.tags['\xa9ART'][0] if '\xa9ART' in file.tags \
+                artist = file['\xa9ART'][0] if '\xa9ART' in file \
                     else ''
-                album = file.tags['\xa9alb'][0] if '\xa9alb' in file.tags \
+                album = file['\xa9alb'][0] if '\xa9alb' in file \
                     else ''
-                title = file.tags['\xa9nam'][0] if '\xa9nam' in file.tags \
+                title = file['\xa9nam'][0] if '\xa9nam' in file \
                     else ''
-                year = file.tags['\xa9day'][0] if '\xa9day' in file.tags \
+                year = file['\xa9day'][0] if '\xa9day' in file \
                     else ''
         except:
             pass
