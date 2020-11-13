@@ -6,7 +6,7 @@
 
 Development version from Github:
 
-    pip install https://github.com/maphew/mutagen-CLI/archive/master.zip 
+    pip install https://github.com/Vftdan/mutagen-CLI/archive/master.zip 
 
 
 ## Usage
