@@ -17,14 +17,14 @@ classifiers = [
     ]
 
 setup(
-    name="mutgen-CLI",
-    version="0.1",
+    name="mutagen-CLI",
+    version="0.2",
     desciption="a mutagen frontend that handles universal ID3 music tagging.",
-    url="http://mutagen.lynnard.tk",
-    author="Lingnan Dai",
+    url="https://github.com/Vftdan/mutagen-CLI",
+    author="Lingnan Dai; Vftdan",
     license="",
     classifiers=classifiers,
-    keywords="mp3 tagger command-line",
+    keywords="mp3 mp4 m4a xmp id3 tagger command-line",
     packages=find_packages(),
     include_package_data=True,
     scripts=[
