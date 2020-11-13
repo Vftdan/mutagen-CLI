@@ -10,18 +10,18 @@ import os
 
 def main():
     parser = argparse.ArgumentParser('Change or manipulate the ID3 tags of the audio files')
-    parser.add_argument('--artist', '-a', default='',
+    parser.add_argument('--artist', '-a', default=None,
                         help='set the artist name')
-    parser.add_argument('--album', '-A', default='',
+    parser.add_argument('--album', '-A', default=None,
                         help='set the album name')
-    parser.add_argument('--title', '-t', default='', help='set the title name')
-    parser.add_argument('--wors', '-r', default='',
+    parser.add_argument('--title', '-t', default=None, help='set the title name')
+    parser.add_argument('--wors', '-r', default=None,
                         help='set the internet radio url')
-    parser.add_argument('--year', '-Y', default='',
+    parser.add_argument('--year', '-Y', default=None,
                         help='set the release year')
-    parser.add_argument('--cover', '-c', default='',
+    parser.add_argument('--cover', '-c', default=None,
                         help='set the cover image')
-    parser.add_argument('--format', '-f', default='',
+    parser.add_argument('--format', '-f', default=None,
                         help='''return the ID3 information as a formatted string;
                                                         the format string should containing one or more of the following specifiers:
                                                         , {artist}
@@ -51,7 +51,7 @@ def main():
     to_wors = args.wors
     to_year = args.year
     to_cover = args.cover
-    if to_cover != '':
+    if to_cover is not None:
         cover_ext = os.path.splitext(to_cover)[1]
         # print("Cover path is "+to_cover)
         import mimetypes
@@ -95,17 +95,17 @@ def main():
                 except:
                     pass
                 # should we set the tag in anyway?
-                if to_artist != '':
+                if to_artist is not None:
                     file.tags['TPE1'] = TPE1(encoding=3, text=to_artist)
-                if to_album != '':
+                if to_album is not None:
                     file.tags['TALB'] = TALB(encoding=3, text=to_album)
-                if to_title != '':
+                if to_title is not None:
                     file.tags['TIT2'] = TIT2(encoding=3, text=to_title)
-                if to_wors != '':
+                if to_wors is not None:
                     file.tags['WORS'] = WORS(url=to_wors)
-                if to_year != '':
+                if to_year is not None:
                     file.tags['TDRL'] = TDRL(encoding=3, text=to_year)
-                if to_cover != '':
+                if to_cover is not None:
                     # print('The image data is '+open(to_cover).read())
                     file.tags['APIC:'] = APIC(
                             encoding=3,
@@ -126,15 +126,15 @@ def main():
                 year = file.tags['TDRL'].text[0] if 'TDRL' in file.tags else ''
             elif (type(file) == MP4):
                 # should we set the tag in anyway?
-                if to_artist != '':
+                if to_artist is not None:
                     file.tags['\xa9ART'] = [to_artist]
-                if to_album != '':
+                if to_album is not None:
                     file.tags['\xa9alb'] = [to_album]
-                if to_title != '':
+                if to_title is not None:
                     file.tags['\xa9nam'] = [to_title]
-                if to_year != '':
+                if to_year is not None:
                     file.tags['\xa9day'] = [to_year]
-                if to_cover != '':
+                if to_cover is not None:
                     file.tags['covr'] = [open(to_cover).read()]
                 file.save()
 
@@ -161,7 +161,7 @@ def main():
             for k in reps:
                 reps[k] = re.sub(escapepat, r'\\\1', u"%s" % reps[k])
 
-        if formatstr != '':
+        if formatstr is not None:
             outputs.append(formatstr.format(**reps))
 
     output = separator.join(outputs)
