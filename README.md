@@ -53,4 +53,4 @@ Development version from Github:
                [--escape ESCAPE]
                audiofile [audiofile ...]
 
-[mutagen]: https://www.github.com/nex3/mutagen
+[mutagen]: https://github.com/quodlibet/mutagen
